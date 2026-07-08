@@ -19,13 +19,13 @@ Every morning at a designated hour, the engine triggers, fetches uncompleted row
 
 The automation relies on an explicit sequence of structured node operations to handle formatting maps and prevent application memory leaks:
 
-1. Schedule Trigger (`Daily 08:00 AM`):
+1. Schedule Trigger (Daily 08:00 AM):
    Acts as the system heartbeat. Fires an immediate downstream signal exactly at 8:00 AM local time daily to kick off the query lifecycle.
-2. Notion Node (`Get Many Database Pages`): 
+2. Notion Node (Get Many Database Pages): 
    Authenticates securely using a server-side Access Token. Connects to the primary **To Do List** workspace view to retrieve live data arrays.
 3. Array Processing Loop (Implicit Automation): 
    n8n handles multiple data items out-of-the-box by splitting the structural payload into individual row streams, running the remaining nodes consecutively for every discovered task.
-4. Slack Node (`Post a message`):
+4. Slack Node (Post a message):
    Extracts dynamic values from the item array using structured syntax layouts and directly publishes target payloads into a localized private user workspace or team communication channel.
 
 
@@ -39,7 +39,7 @@ Data streams sequentially through the canvas components as displayed below:
 
 ### Notion Database Schema
 The workflow looks for specific underlying metadata columns. Ensure your data workspace contains the following parameters:
-* Primary Key Target:** `Task name` (Title Property Class)
+* Primary Key Target:** Task name (Title Property Class)
 
 ### n8n Dynamic Expression Syntax
 To ensure messages don't output abstract static string indicators, the Slack message body parameters leverage JavaScript bracket-notation object keys to cleanly query multi-layered JSON responses from Notion:
