@@ -1,0 +1,122 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "1dbf7ce7-9701-40af-89c5-a8b2c8f44e4c",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "databasePage",
+        "operation": "getAll",
+        "databaseId": {
+          "__rl": true,
+          "value": "317d7ded-4885-80cc-ad8e-f0d97d1c02fa",
+          "mode": "list",
+          "cachedResultName": "Todo List",
+          "cachedResultUrl": "https://app.notion.com/p/317d7ded488580ccad8ef0d97d1c02fa"
+        },
+        "simple": false,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "2f6a0bd4-7e44-40e8-9d91-3432a7048079",
+      "name": "Get many database pages",
+      "credentials": {
+        "notionOAuth2Api": {
+          "id": "1cCZ4GiO1NCq05eg",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "user",
+        "user": {
+          "__rl": true,
+          "value": "U0ADQUGPXSA",
+          "mode": "list",
+          "cachedResultName": "muraguwanjiru"
+        },
+        "text": "=🔔 Task Reminder:{{ $json.properties['Task name'].title[0].plain_text }}\n\n",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.5,
+      "position": [
+        416,
+        0
+      ],
+      "id": "bcddf82c-95cd-4aa8-a32b-1d5e1d6c969c",
+      "name": "Send a message",
+      "webhookId": "6a5b84ec-1bef-44a6-b50e-6d1c3e6dbc6d",
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "QHHzEeSsdarpfRZD",
+          "name": "Slack account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get many database pages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many database pages": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "29f99d6c-ee44-4cc3-a452-c1ae13f3aebb",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9798fa747c56e88c720d119065c3cab2503cf62dc1955663344ccd159ca4db16"
+  },
+  "nodeGroups": [],
+  "id": "iByZuSA4m2hGnI02",
+  "tags": []
+}
